@@ -1,24 +1,46 @@
-import logo from './logo.svg';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
+import NoPage from './NoPage';
+import HomeLayout from './HomeLayout';
+import AdminLayout from './AdminLayout';
+import StudentLogin from './components/StudentLogin';
+import AdminLogin from './components/AdminLogin';
+import StudentLayout from './StudentLayout';
+import AddStudent from './components/adim/AddStudent';
+import AddExamHall from './components/adim/AddExamHall';
+import AddDepartment from './components/adim/AddDepartment';
+import SeatAllocation from './components/adim/SeatAllocation';
+import SeatArrangmnet from './components/adim/SeatArrangement';
+import StudentsDetail from './components/adim/StudentsDetails';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        {/* Authentication Layout */}
+      <Route path="/" element={< HomeLayout/>}>
+          <Route index element={<StudentLogin />} /> 
+          <Route path="admin-login" element={<AdminLogin />} />
+          <Route path="student-login" element={<StudentLogin />} />
+        </Route>
+        {/* Admin Layout */}
+        <Route path="admin" element={< AdminLayout/>}>
+        <Route index element={<AddStudent />} /> 
+          <Route path="add-student" element={<AddStudent />} />
+          <Route path="add-department" element={<AddDepartment />} />
+          <Route path="add-exam-hall" element={<AddExamHall />} />
+          <Route path="seat-allocation" element={<SeatAllocation />} />
+          <Route path='seat-arrangement' element={<SeatArrangmnet/>}/>
+          <Route path='students-deatails' element={<StudentsDetail/>}/>
+        </Route>
+        {/* Student Layout */}
+        <Route path="student" element={< StudentLayout/>}>
+          {/* <Route path="add-student" element={<AddStudent />} />
+          <Route path="add-exam-hall" element={<AddExamHall />} /> */}
+        </Route>
+        <Route path="*" element={<NoPage />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
