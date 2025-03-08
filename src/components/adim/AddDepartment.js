@@ -14,11 +14,9 @@ export default function AddDepartment() {
                 <form onSubmit={handleAddDepartment} style={styles.form}>
 
                     <label htmlFor="department">Department</label>
-                    <select id="department" name="department" style={styles.input} onChange={(e) => setDepartment(e.target.value)}>
-                        <option value="australia">Physics</option>
-                        <option value="canada">Chemistry</option>
-                        <option value="usa">Maths</option>
-                    </select>
+                    <input type="text" id="department" name="department" style={styles.input} onChange={(e) => setDepartment(e.target.value)}/>
+                    
+    
                     <input type="submit" value="Submit" style={styles.submit} />
                 </form>
             </div>

@@ -1,27 +1,26 @@
 import { useState } from "react";
 
-export default function SeatAllocation(){
+export default function SeatAllocation() {
     const [semester, setSemester] = useState('');
     const [date, setDate] = useState();
-    const handleAutoSeat= (event)=>{
+    const handleAutoSeat = (event) => {
 
     }
     return (
         <div>
-        <h1 style={{ textAlign: 'center' }}>Auto Seating Allotment</h1>
-        <div style={styles.container}>
-            <form onSubmit={handleAutoSeat} style={styles.form}>
-                <label htmlFor="hallName">Semester</label>
-                <input
-                    type="text"
-                    id="semester"
-                    name="semester"
-                    placeholder="Semester"
-                    style={styles.input}
-                    onKeyUp={(e) => setSemester(e.target.value)}
-                />
-                <input type="submit" value="Submit" style={styles.submit} />
-                <label htmlFor="lname">Date</label>
+            <h1 style={{ textAlign: 'center' }}>Auto Seating Allotment</h1>
+            <div style={styles.container}>
+                <form onSubmit={handleAutoSeat} style={styles.form}>
+                    <label htmlFor="hallName">Semester</label>
+                    <input
+                        type="text"
+                        id="semester"
+                        name="semester"
+                        placeholder="Semester"
+                        style={styles.input}
+                        onKeyUp={(e) => setSemester(e.target.value)}
+                    />
+                    <label htmlFor="lname">Date</label>
                     <input
                         type="date"
                         id="date"
@@ -30,9 +29,11 @@ export default function SeatAllocation(){
                         style={styles.input}
                         onKeyUp={(e) => setDate(e.target.value)}
                     />
-            </form>
+                    <input type="submit" value="Submit" style={styles.submit} />
+
+                </form>
+            </div>
         </div>
-    </div>
     )
 }
 
