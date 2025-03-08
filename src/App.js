@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import './App.css';
 import NoPage from './NoPage';
 import HomeLayout from './HomeLayout';
@@ -19,14 +19,14 @@ function App() {
       <Routes>
         {/* Authentication Layout */}
       <Route path="/" element={< HomeLayout/>}>
-          <Route index element={<StudentLogin />} /> 
+          <Route index element={<Navigate to="admin-login" replace />} />
           <Route path="admin-login" element={<AdminLogin />} />
           <Route path="student-login" element={<StudentLogin />} />
         </Route>
         {/* Admin Layout */}
         <Route path="admin" element={< AdminLayout/>}>
-        <Route index element={<AddStudent />} /> 
-          <Route path="add-student" element={<AddStudent />} />
+        <Route index element={<Navigate to="add-student" replace />} />
+        <Route path="add-student" element={<AddStudent />} />
           <Route path="add-department" element={<AddDepartment />} />
           <Route path="add-exam-hall" element={<AddExamHall />} />
           <Route path="seat-allocation" element={<SeatAllocation />} />

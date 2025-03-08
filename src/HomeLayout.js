@@ -1,16 +1,33 @@
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, NavLink, Navigate } from "react-router-dom";
 
 export default function HomeLayout() {
+    // Redirect to /student-login by default
     return (
         <div>
-            <div >
-                <ul >
-                    <li style={{textAlign:'center'}}><Link to='/admin-login'>Admin Login</Link></li>
-                    <li style={{textAlign:'center'}}> <Link to='/student-login'> Student Login</Link></li>
+            {/* <Navigate to="/admin-login" replace /> */}
+            
+            <div>
+                <ul style={{ listStyle: 'none' }}>
+                    <li style={{ textAlign: 'center' }}>
+                        <NavLink
+                            to='/admin-login'
+                            className={({ isActive }) => (isActive ? 'active' : '')}
+                        >
+                            Admin Login
+                        </NavLink>
+                    </li>
+                    <li style={{ textAlign: 'center' }}>
+                        <NavLink
+                            to='/student-login'
+                            className={({ isActive }) => (isActive ? 'active' : '')}
+                        >
+                            Student Login
+                        </NavLink>
+                    </li>
                 </ul>
             </div>
 
             <Outlet />
         </div>
-    )
+    );
 }
