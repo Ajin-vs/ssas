@@ -1,39 +1,53 @@
+import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function StudentLogin(){
+export default function StudentLogin() {
     const navigate = useNavigate();
     const [regNumber, setRegNumber] = useState('');
     const [dob, setDob] = useState('');
     const handleLogin = (event) => {
         // Prevent the default form submission behavior
         event.preventDefault();
-        alert("Login Successfully");
-        navigate("/student");
+        axios
+            .post("http://localhost:8000/student-login", { regNumber, dob })
+            .then(data => {
+                if(data.data.status === 'success'){
+                    localStorage.setItem('studentId', data.data.data._id)
+                    navigate("/student");
+
+                }
+                else{
+                    alert(data.data.message)
+                }
+            })
+            .catch(error => console.log(error));
     };
     return (
         <>
-            <h1 style={{textAlign:'center'}}> Student Login</h1>
+            <h1 style={{ textAlign: 'center' }}> Student Login</h1>
             <div style={styles.container}>
                 <form onSubmit={handleLogin} style={styles.form}>
                     <label htmlFor="fname">Registration Number</label>
                     <input
+                        required
                         type="number"
                         id="rNo"
                         name="rNo"
                         placeholder="Registration Number"
                         style={styles.input}
-                        onKeyUp={(e)=> setRegNumber(e.target.value)}
+                        onKeyUp={(e) => setRegNumber(e.target.value)}
                     />
 
-                    <label htmlFor="lname">Password</label>
+                    <label htmlFor="lname">DOB</label>
                     <input
+                        required
                         type="date"
                         id="dob"
                         name="dob"
                         placeholder="DOB"
                         style={styles.input}
-                        onKeyUp={(e)=> setDob(e.target.value)}
+                        onChange={(e) => setDob(e.target.value)}
                     />
 
                     {/* <label htmlFor="country">Country</label>

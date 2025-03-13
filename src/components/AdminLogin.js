@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -8,33 +9,44 @@ export default function AdminLogin() {
     const handleLogin = (event) => {
         // Prevent the default form submission behavior
         event.preventDefault();
-        alert(userName, "Login Successfully");
-        navigate("/admin");
+        axios
+            .post("http://localhost:8000/admin-login", { userName, password })
+            .then(data => {
+                if (data.data.status === 'success') {
+                    localStorage.setItem('admin', true);
+                    navigate("/admin");
+                } else {
+                    alert(data.data.message)
+                }
+            })
+            .catch(error => console.log(error));
     };
 
     return (
         <>
-            <h1 style={{textAlign:'center'}}> Admin Login</h1>
+            <h1 style={{ textAlign: 'center' }}> Admin Login</h1>
             <div style={styles.container}>
-                <form onSubmit={handleLogin} style={styles.form}>
+                <form style={styles.form} onSubmit={handleLogin}>
                     <label htmlFor="fname">User Name</label>
                     <input
+                        required
                         type="text"
                         id="fname"
                         name="firstname"
                         placeholder="User Name"
                         style={styles.input}
-                        onKeyUp={(e)=> setUserName(e.target.value)}
+                        onKeyUp={(e) => setUserName(e.target.value)}
                     />
 
                     <label htmlFor="lname">Password</label>
                     <input
+                        required
                         type="password"
                         id="lname"
                         name="lastname"
                         placeholder="Password"
                         style={styles.input}
-                        onKeyUp={(e)=> setPassword(e.target.value)}
+                        onKeyUp={(e) => setPassword(e.target.value)}
                     />
 
                     {/* <label htmlFor="country">Country</label>
@@ -44,7 +56,7 @@ export default function AdminLogin() {
                         <option value="usa">USA</option>
                     </select> */}
 
-                    <input type="submit" value="Login" style={styles.submit} />
+                    <button style={styles.submit} type="submit"  >Submit</button>
                 </form>
             </div>
         </>

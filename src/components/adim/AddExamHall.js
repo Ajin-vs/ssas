@@ -1,13 +1,29 @@
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function AddExamHall() {
     const [hallName, setHallName] = useState('');
     const [blockName, setBlockName] = useState('');
     const [floor, setFloor] = useState('');
     const [seatCapacity, setSeatCapacity] = useState();
+    const navigate = useNavigate();
+
+     useEffect(()=>{
+            const admin = localStorage.getItem('admin');
+            if(!admin ){
+                navigate('/');
+            }
+        },[])
     const handleAddExamHall = (event) => {
         // Prevent the default form submission behavior
         event.preventDefault();
+        axios
+            .post("http://localhost:8000/add-exam-hall", { hallName, blockName, floor, seatCapacity })
+            .then(data => {
+                alert("Exam hall added successfully")
+            })
+            .catch(error => console.log(error));
     };
     return (
         <div>
@@ -16,6 +32,7 @@ export default function AddExamHall() {
                 <form onSubmit={handleAddExamHall} style={styles.form}>
                     <label htmlFor="hallName">Hall Name</label>
                     <input
+                        required
                         type="text"
                         id="hallName"
                         name="hallName"
@@ -25,6 +42,7 @@ export default function AddExamHall() {
                     />
                     <label htmlFor="blockName">Block Name</label>
                     <input
+                        required
                         type="text"
                         id="blockName"
                         name="blockName"
@@ -35,6 +53,7 @@ export default function AddExamHall() {
 
                     <label htmlFor="floor">Floor</label>
                     <input
+                        required
                         type="text"
                         id="floor"
                         name="floor"
@@ -42,8 +61,9 @@ export default function AddExamHall() {
                         style={styles.input}
                         onKeyUp={(e) => setFloor(e.target.value)}
                     />
-                      <label htmlFor="seatCapacity">Seat Capacity</label>
+                    <label htmlFor="seatCapacity">Seat Capacity</label>
                     <input
+                        required
                         type="number"
                         id="seatCapacity"
                         name="seatCapacity"

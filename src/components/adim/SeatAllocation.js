@@ -1,10 +1,27 @@
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function SeatAllocation() {
     const [semester, setSemester] = useState('');
     const [date, setDate] = useState();
-    const handleAutoSeat = (event) => {
+    const navigate = useNavigate();
 
+     useEffect(()=>{
+            const admin = localStorage.getItem('admin');
+            if(!admin ){
+                navigate('/');
+            }
+        },[])
+    const handleAutoSeat = (event) => {
+        event.preventDefault();
+        axios
+            .post("http://localhost:8000/seat-allocation", { semester, date })
+            .then(data => {
+                console.log(data.data.message);
+                alert(data.data.message)
+            })
+            .catch(error => console.log(error));
     }
     return (
         <div>
@@ -13,6 +30,7 @@ export default function SeatAllocation() {
                 <form onSubmit={handleAutoSeat} style={styles.form}>
                     <label htmlFor="hallName">Semester</label>
                     <input
+                        required
                         type="text"
                         id="semester"
                         name="semester"
@@ -22,12 +40,13 @@ export default function SeatAllocation() {
                     />
                     <label htmlFor="lname">Date</label>
                     <input
+                        required
                         type="date"
                         id="date"
                         name="date"
                         placeholder="Date"
                         style={styles.input}
-                        onKeyUp={(e) => setDate(e.target.value)}
+                        onChange={(e) => setDate(e.target.value)}
                     />
                     <input type="submit" value="Submit" style={styles.submit} />
 

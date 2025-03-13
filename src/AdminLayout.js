@@ -4,6 +4,7 @@ export default function AdminLayout() {
     const navigate = useNavigate();
 
     function handleLogout() {
+        localStorage.removeItem('admin');
         navigate('/');
     }
 

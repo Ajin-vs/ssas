@@ -12,6 +12,8 @@ import AddDepartment from './components/adim/AddDepartment';
 import SeatAllocation from './components/adim/SeatAllocation';
 import SeatArrangmnet from './components/adim/SeatArrangement';
 import StudentsDetail from './components/adim/StudentsDetails';
+import YourProfile from './components/students/YourProfile';
+import ViewMyHall from './components/students/ViewMyHall';
 
 function App() {
   return (
@@ -35,8 +37,9 @@ function App() {
         </Route>
         {/* Student Layout */}
         <Route path="student" element={< StudentLayout />}>
-          {/* <Route path="add-student" element={<AddStudent />} />
-          <Route path="add-exam-hall" element={<AddExamHall />} /> */}
+          <Route index element={<Navigate to="your-profile" replace />} />
+          <Route path="your-profile" element={<YourProfile />} />
+          <Route path="view-my-hall" element={<ViewMyHall />} />
         </Route>
         <Route path="*" element={<NoPage />} />
       </Routes>

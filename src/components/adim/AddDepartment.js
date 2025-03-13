@@ -1,11 +1,27 @@
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function AddDepartment() {
+    const [department, setDepartment] = useState('');
+    const navigate = useNavigate();
+
+    useEffect(()=>{
+        const admin = localStorage.getItem('admin');
+        if(!admin ){
+            navigate('/');
+        }
+    },[])
     const handleAddDepartment = (event) => {
         // Prevent the default form submission behavior
         event.preventDefault();
+        axios
+        .post("http://localhost:8000/add-department",{department})
+        .then(data => {
+            alert("Department saved successfully")
+        })
+        .catch(error => console.log(error));
     };
-    const [department, setDepartment] = useState('');
     
     return (
         <div>
@@ -14,7 +30,7 @@ export default function AddDepartment() {
                 <form onSubmit={handleAddDepartment} style={styles.form}>
 
                     <label htmlFor="department">Department</label>
-                    <input type="text" id="department" name="department" style={styles.input} onChange={(e) => setDepartment(e.target.value)}/>
+                    <input required type="text" id="department" name="department" style={styles.input} onChange={(e) => setDepartment(e.target.value)}/>
                     
     
                     <input type="submit" value="Submit" style={styles.submit} />
